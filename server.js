@@ -27,14 +27,14 @@ app.post('/login', async (req, res) => {
 )
 app.post('/signup',async(req,res)=>{
   
-    const {username,password}=req.body
+    const {username,password,email}=req.body
     
-      const checking= await mongoose.connection.db.collection('users').findOne({ username, password })
+      const checking= await mongoose.connection.db.collection('users').findOne({ username, password, email})
       if(checking){ res.json({auth: "logged"})}
 
       else{
         try{
-        const check=await mongoose.connection.db.collection('users').insertOne({ username, password })
+        const check=await mongoose.connection.db.collection('users').insertOne({ username, password ,email})
         if(check){ res.json({auth: "signedup"})}
         else{res.json({auth:failed})}}
      
