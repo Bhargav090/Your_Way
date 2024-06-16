@@ -14,7 +14,7 @@ app.post('/login', async (req, res) => {
   
     const { username, password } = req.body
     try {
-      const checking = mongoose.connection.db.collection('users').findOne({ username, password })
+      const checking = await mongoose.connection.db.collection('users').findOne({ username, password })
       if (checking) { res.json({ auth: "success" }) }
       else{res.json({auth:"failed"})}
     }
