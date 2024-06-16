@@ -1,5 +1,5 @@
-let express = require('express')
-let mongoose = require('mongoose')
+const express = require('express')
+const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
 app.use(express.json())
@@ -28,17 +28,19 @@ app.post('/login', async (req, res) => {
 app.post('/signup',async(req,res)=>{
   
     const {username,password}=req.body
-    try{
-      const checking=mongoose.connection.db.collection('users').findOne({ username, password })
+    
+      const checking= await mongoose.connection.db.collection('users').findOne({ username, password })
       if(checking){ res.json({auth: "logged"})}
+
       else{
-        const check=mongoose.connection.db.collection('users').insertOne({ username, password })
+        try{
+        const check=await mongoose.connection.db.collection('users').insertOne({ username, password })
         if(check){ res.json({auth: "signedup"})}
-        else{res.json({auth:failed})}
-      }}
+        else{res.json({auth:failed})}}
+     
       catch (err)
       {console.log(err)}
-    
+        }
   
 })
 app.listen('1313')
