@@ -1,0 +1,1 @@
+module.exports=`mongodb+srv://admin:ve908stories@cluster0.wgh18xy.mongodb.net/`
