@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken')
 const jwtM = require('./middle'); 
-const users = require('./User');
+const modd = require("./User");
+const posts=modd.posts
+const users=modd.users
 const app = express();
-app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 let url = require('./url');
@@ -86,6 +87,20 @@ app.post('/signup', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+app.post('/uploadpost', async (req, res) => {
+  const {p_name,p_img,p_description } = req.body;
+
+  try{
+    const newpost= new posts({p_name,p_img,p_description});
+    await newpost.save();
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+  
+  } 
+);
 
 
 app.listen(1313, () => {
